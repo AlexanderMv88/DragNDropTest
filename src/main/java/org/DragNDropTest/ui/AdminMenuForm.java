@@ -46,11 +46,28 @@ public class AdminMenuForm extends Panel implements View {
         });
         GridDropTarget<Employee> target = new GridDropTarget<>(grid, DropMode.ON_TOP_OR_BETWEEN);
         target.addGridDropListener(e -> {
-            String[] names = e.getDataTransferText().split("\n");
-            for (String name: names) {
-                Employee empl = new Employee(name);
-                ((NavigatorUI) getUI()).employeeRepository.save(empl);
-                refreshEmployeeGrid();
+            String[] values = e.getDataTransferText().split("\t");
+            switch(values.length) {
+                case 1:
+
+                    for (String name : values) {
+                        Employee empl = new Employee(name);
+                        ((NavigatorUI) getUI()).employeeRepository.save(empl);
+                        refreshEmployeeGrid();
+                    }
+                    break;
+                case 5: {
+                    Employee empl = new Employee(values[0], values[1], values[2], values[3], values[4]);
+                    ((NavigatorUI) getUI()).employeeRepository.save(empl);
+                    refreshEmployeeGrid();
+                    break;
+                }
+                case 6: {
+                    Employee empl = new Employee(values[0], values[1], values[2], values[3],Long.valueOf(values[4]), values[5]);
+                    ((NavigatorUI) getUI()).employeeRepository.save(empl);
+                    refreshEmployeeGrid();
+                    break;
+                }
             }
         });
     }
@@ -68,6 +85,7 @@ public class AdminMenuForm extends Panel implements View {
         renameCrudWindowButtons(objFormFactory);
         Map<String, String> columnsWithCaptions = new LinkedHashMap<String, String>() {
             {
+                this.put("id", "id");
                 this.put("fullName", "ФИО");
                 this.put("department", "Отдел");
                 this.put("position", "Должность");
@@ -78,6 +96,7 @@ public class AdminMenuForm extends Panel implements View {
         setCaptionsToGridAndWindow(objFormFactory, objCrudUI, columnsWithCaptions);
         objCrudUI.setCrudFormFactory(objFormFactory);
         objCrudUI.getGrid().getColumn("id").setHidden(true);
+
         objCrudUI.setCrudListener(new CrudListener<Employee>() {
             @Override
             public Collection<Employee> findAll() {
@@ -127,6 +146,4 @@ public class AdminMenuForm extends Panel implements View {
     private void refreshEmployeeGrid()  {
         crud.refreshGrid();
     }
-
-
 }

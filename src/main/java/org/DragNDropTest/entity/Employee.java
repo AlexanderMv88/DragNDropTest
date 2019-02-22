@@ -21,8 +21,6 @@ public class Employee {
     private String phone;
     private String mobilePhone;
 
-
-
     public long getId() {
         return id;
     }
@@ -78,4 +76,19 @@ public class Employee {
         this.fullName = name;
     }
 
+    public Employee( String mobilePhone,String phone,String fullName, String position, String department) {
+        this.fullName = fullName;
+        this.department = department;
+        this.position = position;
+        this.phone = phone;
+        this.mobilePhone = mobilePhone;
+    }
+
+    public Employee( String mobilePhone,String phone,String fullName, String position, long id,  String department) {
+        this.fullName = fullName;
+        this.department = department;
+        this.position = position;
+        this.phone = phone;
+        this.mobilePhone = mobilePhone;
+    }
 }

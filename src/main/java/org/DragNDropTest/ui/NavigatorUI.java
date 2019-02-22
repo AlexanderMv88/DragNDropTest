@@ -27,7 +27,6 @@ public class NavigatorUI extends UI {
     @Autowired
     public NavigatorUI(EmployeeRepository employeeRepository){
         this.employeeRepository = employeeRepository;
-
     }
 
     @Override
@@ -37,17 +36,9 @@ public class NavigatorUI extends UI {
         navigator.addView(MAIN_MENU_FORM, mainMenuForm);
         navigator.addView(ADMIN_MENU_FORM, adminMenuForm);
         navigator.navigateTo(ADMIN_MENU_FORM);
-
     }
 
     public Navigator getNavigator() {
         return navigator;
     }
-
-
-
-
-
-
-
 }
